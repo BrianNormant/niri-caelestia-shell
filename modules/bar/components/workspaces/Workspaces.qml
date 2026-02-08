@@ -86,7 +86,7 @@ StyledRect {
     Loader {
         anchors.left: parent.left
         anchors.right: parent.right
-        active: Config.bar.workspaces.activeIndicator
+        // active: Config.bar.workspaces.activeIndicator
         asynchronous: true
 
         sourceComponent: ActiveIndicator {
