@@ -99,7 +99,7 @@
   };
 in
   stdenv.mkDerivation {
-    inherit version;
+    version = "caealestia-qs";
     pname = "caelestia-qs${lib.optionalString debug "-debug"}";
     src = ./..;
 
@@ -128,11 +128,11 @@ in
     '';
 
     postInstall = ''
-      makeWrapper ${quickshell}/bin/qs $out/bin/caelestia-shell \
+      makeWrapper ${quickshell}/bin/qs $out/bin/caelestia-qs \
       	--prefix PATH : "${lib.makeBinPath runtimeDeps}" \
       	--set FONTCONFIG_FILE "${fontconfig}" \
       	--set CAELESTIA_LIB_DIR ${extras}/lib \
-        --set CAELESTIA_XKB_RULES_PATH ${xkeyboard-config}/share/xkeyboard-config-2/rules/base.lst \
+        --set CAELESTIA_XKB_RULES_PATH ${xkeyboard-config}/share/xkeyboard-config-2/rules/base.lst
 
       mkdir -p $out/lib
       ln -s ${extras}/lib/* $out/lib/
@@ -146,6 +146,6 @@ in
       description = "A very segsy desktop shell";
       homepage = "https://github.com/caelestia-dots/shell";
       license = lib.licenses.gpl3Only;
-      mainProgram = "caelestia-shell";
+      mainProgram = "caelestia-qs";
     };
   }
