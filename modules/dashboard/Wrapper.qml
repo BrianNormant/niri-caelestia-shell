@@ -41,28 +41,6 @@ Item {
     //     root.isvisible = false;
     // }
 
-    // Timer to control temporary visibility
-    Timer {
-        id: flashTimer
-        interval: 500 // 0.5 second
-        running: false
-        repeat: false
-        onTriggered: {
-            root.isvisible = false;
-        }
-    }
-
-    Connections {
-        target: Niri
-        function onFocusedWindowIdChanged() {
-            // Show dashboard for 1 second
-            if ((!root.visibilities.dashboard && !root.expanded) && Niri.focusedWindowId) {
-                root.isvisible = true;
-                flashTimer.restart();
-            }
-        }
-    }
-
     visible: height > 0
     implicitHeight: 0
     implicitWidth: content.implicitWidth

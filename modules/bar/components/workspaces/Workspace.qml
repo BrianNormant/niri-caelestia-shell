@@ -44,10 +44,6 @@ ColumnLayout {
 
     spacing: 0
 
-    WorkspaceIcon {
-        workspace: root
-    }
-
     Loader {
         id: windows
 

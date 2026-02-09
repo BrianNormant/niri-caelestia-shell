@@ -16,9 +16,7 @@ import Quickshell
 ShellRoot {
     // property bool enableSidebarLeft: true
     // property bool enableSidebarRight: false
-    Background {}
     Drawers {}
-    AreaPicker {}
     Lock {}
 
     Shortcuts {}

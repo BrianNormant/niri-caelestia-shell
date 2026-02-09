@@ -43,11 +43,12 @@ Item {
                 text: {
                     //TODO: Add config option to choose between name/number/both for workspaces
 
-                    const wsName = Niri.getWorkspaceNameByIndex(root.workspace.index) || (root.workspace.ws);
-                    const label = Config.bar.workspaces.label || root.workspace.ws;
-                    const occupiedLabel = Config.bar.workspaces.occupiedLabel || label;
-                    const activeLabel = root.workspace.activeWsId || (root.workspace.isOccupied ? occupiedLabel : label);
-                    return root.workspace.activeWsId === root.workspace.ws ? activeLabel : root.workspace.isOccupied ? occupiedLabel : label;
+                    // const wsName = Niri.getWorkspaceNameByIndex(root.workspace.index) || (root.workspace.ws);
+                    // const label = Config.bar.workspaces.label || root.workspace.ws;
+                    // const occupiedLabel = Config.bar.workspaces.occupiedLabel || label;
+                    // const activeLabel = root.workspace.activeWsId || (root.workspace.isOccupied ? occupiedLabel : label);
+                    // return root.workspace.activeWsId === root.workspace.ws ? activeLabel : root.workspace.isOccupied ? occupiedLabel : label;
+					return "-"
                 }
 
                 color: root.workspace.activeWsId === root.workspace.ws ? Colours.palette.m3onPrimary : (root.workspace.isOccupied ? Colours.palette.m3onSurface : Colours.palette.m3outlineVariant)
@@ -65,7 +66,7 @@ Item {
                  : (root.workspace.isOccupied ? Colours.palette.m3onSurface : Colours.palette.m3outlineVariant)
 
                 font.family: Appearance.font.family.mono
-                text: Niri.getWorkspaceNameByIndex(root.workspace.index) || "Workspace " + (root.workspace.index + 1)
+                text: Niri.getWorkspaceNameByIndex(root.workspace.index) || "Workspace " + "-"
             }
         }
         z: 1

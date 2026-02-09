@@ -1,7 +1,7 @@
 import Quickshell.Io
 
 JsonObject {
-    property bool persistent: false
+    property bool persistent: true
     property bool showOnHover: true
     property int dragThreshold: 20
     property ScrollActions scrollActions: ScrollActions {}
