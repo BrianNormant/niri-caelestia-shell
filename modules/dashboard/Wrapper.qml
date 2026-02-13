@@ -13,9 +13,6 @@ import Caelestia
 Item {
     id: root
 
-    property bool expanded: false
-    property bool isvisible: false
-
     required property PersistentProperties visibilities
     readonly property PersistentProperties state: PersistentProperties {
         property int currentTab
@@ -35,34 +32,27 @@ Item {
         }
     }
 
-    // TODO add a way to dismiss with keyboard.
-    // Keys.onEscapePressed: function () {
-    //     root.expanded = false;
-    //     root.isvisible = false;
-    // }
+    readonly property real nonAnimHeight: state === "visible" ? (content.item?.nonAnimHeight ?? 0) : 0
 
     visible: height > 0
     implicitHeight: 0
     implicitWidth: content.implicitWidth
 
-    states: [
-        State {
-            name: "visible"
-            when: root.isvisible || ((root.visibilities.dashboard && Config.dashboard.enabled) && !root.expanded)
-            PropertyChanges {
-                target: root
-                implicitHeight: 45
-            }
-        },
-        State {
-            name: "expanded"
-            when: (Config.dashboard.enabled) && root.expanded
-            PropertyChanges {
-                target: root
-                implicitHeight: content.implicitHeight
-            }
+    onStateChanged: {
+        if (state === "visible" && timer.running) {
+            timer.triggered();
+            timer.stop();
         }
-    ]
+    }
+
+    states: State {
+        name: "visible"
+        when: root.visibilities.dashboard && Config.dashboard.enabled
+
+        PropertyChanges {
+            root.implicitHeight: content.implicitHeight
+        }
+    }
 
     transitions: [
         Transition {
@@ -85,58 +75,32 @@ Item {
                 property: "implicitHeight"
                 easing.bezierCurve: Appearance.anim.curves.emphasized
             }
-        },
-        Transition {
-            from: "*"
-            to: "*"
-
-            NumberAnimation {
-                target: root
-                property: "implicitHeight"
-                duration: Appearance.anim.durations.expressiveDefaultSpatial
-                easing.type: Easing.BezierSpline
-                easing.bezierCurve: Appearance.anim.curves.emphasized
-            }
         }
     ]
 
-    HyprlandFocusGrab {
-        active: !Config.dashboard.showOnHover && root.visibilities.dashboard && Config.dashboard.enabled
-        windows: [QsWindow.window]
-        onCleared: root.visibilities.dashboard = false
+    Timer {
+        id: timer
+
+        running: true
+        interval: Appearance.anim.durations.extraLarge
+        onTriggered: {
+            content.active = Qt.binding(() => (root.visibilities.dashboard && Config.dashboard.enabled) || root.visible);
+            content.visible = true;
+        }
     }
 
     Loader {
         id: content
 
-        Component.onCompleted: active = Qt.binding(() => (root.visibilities.dashboard && Config.dashboard.enabled) || root.visible)
-
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
+
+        visible: false
+        active: true
 
         sourceComponent: Content {
             visibilities: root.visibilities
             state: root.state
-            // --- MouseArea for hover/click detection ---
-            MouseArea {
-                id: hoverArea
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                height: 50
-                // hoverEnabled: true
-                preventStealing: true
-                // z: 1000
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    if (!root.expanded) {
-                        root.expanded = true;
-                    } else if (root.expanded) {
-                        root.expanded = false;
-                    }
-                }
-            }
         }
     }
 }
