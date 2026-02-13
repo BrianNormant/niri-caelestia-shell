@@ -25,14 +25,6 @@ JsonObject {
             enabled: true
         },
         {
-            id: "activeWindow",
-            enabled: true
-        },
-        {
-            id: "spacer",
-            enabled: true
-        },
-        {
             id: "tray",
             enabled: true
         },
@@ -45,19 +37,15 @@ JsonObject {
             enabled: true
         },
         {
-            id: "power",
-            enabled: true
-        },
-        {
             id: "idleInhibitor",
-            enabled: false
+            enabled: true
         }
     ]
 
     component ScrollActions: JsonObject {
         property bool workspaces: true
-        property bool volume: true
-        property bool brightness: true
+        property bool volume: false
+        property bool brightness: false
     }
 
     component Workspaces: JsonObject {
@@ -88,9 +76,9 @@ JsonObject {
     }
 
     component Status: JsonObject {
-        property bool showAudio: false
-        property bool showMicrophone: false
-        property bool showKbLayout: false
+        property bool showAudio: true
+		property bool showMicrophone: false
+		property bool showKbLayout: false
         property bool showNetwork: true
         property bool showBluetooth: true
         property bool showBattery: true
