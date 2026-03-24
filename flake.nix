@@ -36,7 +36,7 @@
           withX11 = false;
           withI3 = false;
         };
-        app2unit = pkgs.callPackage ./nix/app2unit.nix {inherit pkgs;};
+        app2unit = pkgs.app2unit;
         caelestia-cli = inputs.caelestia-cli.packages.${pkgs.system}.default;
       };
       quickshell-p = pkgs.callPackage ./nix/qsp.nix {
@@ -46,7 +46,7 @@
           withX11 = false;
           withI3 = false;
         };
-        app2unit = pkgs.callPackage ./nix/app2unit.nix {inherit pkgs;};
+        app2unit = pkgs.app2unit;
         caelestia-cli = inputs.caelestia-cli.packages.${pkgs.system}.default;
       };
       with-cli = caelestia-shell.override {withCli = true;};
